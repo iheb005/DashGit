@@ -8,6 +8,41 @@ import { SwiperOptions } from 'swiper';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  /*Images: Array<object> =[
+    {
+      src: './assets/img/billingsys.jpg',
+        alt: 'Image 1',
+    },
+    {
+      src: './assets/img/bills.jpg',
+        alt: 'Image 2',
+    },
+    {
+      src: './assets/img/facture.png',
+        alt: 'Image 4',
+    },
+    {
+      src: './assets/img/facture.png',
+        alt: 'Image 5',
+    },
+    {
+      src: './assets/img/facture.png',
+        alt: 'Image 6',
+    }
+  ]
+  */
+  config: SwiperOptions = {
+    pagination:{
+      el: '.swiper-pagination',
+      clickable: true
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev'
+    },
+    spaceBetween: 30
+  };
+
   public lineBigDashboardChartType;
   public gradientStroke;
   public chartColor;
@@ -58,6 +93,11 @@ export class DashboardComponent implements OnInit {
       return "rgb(" + r + ", " + g + ", " + b + ")";
     }
   }
+
+ 
+  
+  
+  
   constructor() { }
 
   ngOnInit() {
@@ -413,31 +453,5 @@ export class DashboardComponent implements OnInit {
 
     this.lineChartGradientsNumbersType = 'bar';
   }
-Images: Array<object> =[
-  {
-    src: './assets/img/billingsys.jpg',
-      alt: 'Image 1',
-  },
-  {
-    src: './assets/img/bills.jpg',
-      alt: 'Image 2',
-  },
-  {
-    src: './assets/img/facture.png',
-      alt: 'Image 3',
-  }
-]
-
-  config: SwiperOptions = {
-    pagination:{
-      el: '.swiper-pagination',
-      clickable: true
-    },
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev'
-    },
-    spaceBetween: 30
-  };
 
 }
