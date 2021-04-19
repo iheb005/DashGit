@@ -5,26 +5,69 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h5 class="title">100 Awesome Nucleo Icons</h5>
-          <p class="category">Handcrafted by our friends from
-            <a href="https://nucleoapp.com/?ref=1712">NucleoApp</a>
-          </p>
+          <h3 class="title">Gestion des utilisateurs</h3>  
         </div>
         <div class="card-body all-icons">
           <div class="row">
+            
+            <!--
             <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
               <div class="font-icon-detail">
                 <i class="now-ui-icons arrows-1_cloud-download-93"></i>
                 <p>arrows-1_cloud-download-93</p>
               </div>
             </div>
+-->
+            <!--
             <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
               <div class="font-icon-detail">
                 <i class="now-ui-icons arrows-1_cloud-upload-94"></i>
                 <p>arrows-1_cloud-upload-94</p>
               </div>
             </div>
-            <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
+
+-->            
+
+            <table class="table table-bordered table-striped">
+              <button class="btn btn-sm btn-outline-primary" (click)="open(content)">
+                <i class="fa fa-user">Créer un nouveau utilisateur</i>
+                </button>
+
+              <thead>
+                <tr>
+                  <th>ID utilisateur</th>
+                  <th>Prenom</th>
+                  <th>Nom</th>
+                  <th>Email</th>
+                  <th>statut</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users">
+                  <td><span>{{user.id}}</span></td>
+                  <td><span>{{user.firstname}}</span></td>
+                  <td><span>{{user.lastname}}</span></td>
+                  <td><span>{{user.email}}</span></td>
+                  <td><span>{{user.active}}</span></td>
+              <td>
+
+                  <button class="btn btn-sm btn-info">
+                    <i class="fa fa-search">Rechercher</i>
+                    </button>
+
+                  <button class="btn btn-sm btn-warning">
+                  <i class="fa fa-edit">Modifier</i>
+               </button> 
+               <button class="btn btn-sm btn-danger">
+                  <i class="fa fa-remove">supprimer</i>
+               </button>
+              
+              </td>
+                </tr>
+              </tbody>
+            </table>
+         <!--   <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
               <div class="font-icon-detail">
                 <i class="now-ui-icons arrows-1_minimal-down"></i>
                 <p>arrows-1_minimal-down</p>
@@ -612,9 +655,53 @@
                 <p>users_single-02</p>
               </div>
             </div>
+          -->
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Nouvel utilisateur</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+      <div class="form-group">
+        <label for="firstname">Prenom</label>
+        <div class="input-group">
+          <input id="firstname" name="firstname" class="form-control" ngModel >
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastname">Nom</label>
+        <div class="input-group">
+          <input id="lastname" name="lastname" class="form-control" ngModel >
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <div class="input-group">
+          <input id="email" name="email" class="form-control" ngModel >
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="active">statut</label>
+        <div class="input-group">
+          <input id="active" name="active" class="form-control" ngModel >
+        </div>
+      </div>
+      <div class="border text-center">
+        <button data-dismiss="modal" class="btn btn-info">Submit</button>
+        </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
+  </div>
+</ng-template>
