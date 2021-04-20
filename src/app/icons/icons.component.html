@@ -52,11 +52,11 @@
                   <td><span>{{user.active}}</span></td>
               <td>
 
-                  <button class="btn btn-sm btn-info">
-                    <i class="fa fa-search">Rechercher</i>
+                  <button class="btn btn-sm btn-info" (click)="openDetails(contentDetails, user)" >
+                    <i class="fa fa-search">Détails</i>
                     </button>
 
-                  <button class="btn btn-sm btn-warning">
+                  <button class="btn btn-sm btn-warning" (click)="openEdit(contentEdit, user)">
                   <i class="fa fa-edit">Modifier</i>
                </button> 
                <button class="btn btn-sm btn-danger">
@@ -699,6 +699,102 @@
       <div class="border text-center">
         <button data-dismiss="modal" class="btn btn-info">Submit</button>
         </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
+  </div>
+</ng-template>
+
+<!-- Details user-->
+
+<ng-template #contentDetails let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Détails utilisateur</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    
+    <form>
+      <div class="form-group">
+        <label for="firstname">Prenom</label>
+        <div class="input-group">
+          <input id="fname" class="form-control" readonly>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastname">Nom</label>
+        <div class="input-group">
+          <input id="lname" class="form-control" readonly>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Email</label>
+        <div class="input-group">
+          <input id="email2" class="form-control" readonly >
+        </div>
+      </div>
+      <div class="form-group">
+        <label> Statut</label>
+        <div class="input-group">
+          <input id="status" class="form-control" readonly>
+        </div>
+      </div>
+    </form>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
+  </div>
+</ng-template>
+
+
+    <!-- edit user data -->
+
+<ng-template #contentEdit let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Modifier utilisateur</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="editForm" novalidate>
+      <div class="form-group"> 
+       <label for="id">Id</label> 
+       <div class="input-group"> 
+          <input formControlName="id" class="form-control"> 
+       </div> 
+     </div>
+      <div class="form-group">
+        <label for="firstname">Prénom</label>
+        <div class="input-group">
+          <input formControlName="firstname" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastname">Nom</label>
+        <div class="input-group">
+          <input formControlName="lastname" class="form-control">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <div class="input-group">
+          <input formControlName="email" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="active">Statut</label>
+        <div class="input-group">
+          <input formControlName="active" class="form-control">
+        </div>
+      </div>
+      <div class="border text-center"> <button data-dismiss="modal" class="btn btn-info">Sauvegarder</button> </div>
     </form>
   </div>
   <div class="modal-footer">
