@@ -22,7 +22,7 @@ export class User {
 })
 export class IconsComponent implements OnInit {
 users: User[];
-public closeResult: string;
+closeResult: string;
 editForm: FormGroup;
 //stat: string;
  private deleteID: number;
@@ -101,8 +101,8 @@ editForm: FormGroup;
    size: 'lg'
  });
  this.editForm.patchValue({
-   id:user.id,
-   firstname:user.firstname,
+   id: user.id,
+   firstname: user.firstname,
    lastname: user.lastname,
    email: user.email,
    active: user.active

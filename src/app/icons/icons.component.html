@@ -663,7 +663,7 @@
     </div>
   </div>
 </div>
-
+<!-- add new user -->
 <ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Nouvel utilisateur</h4>
@@ -767,7 +767,7 @@
       <div class="modal-body">
         <form [formGroup]="editForm" novalidate >
           <div class="form-group"> 
-           <label for="id">Id</label> 
+           <label>Id</label> 
            <div class="input-group"> 
               <input formControlName="id" class="form-control" > 
            </div> 
@@ -817,7 +817,7 @@
       <div class="modal-body">
         <h3>voulez-vous supprimer cet utilisateur ?</h3>
         <div class="border-text-center">
-          <button data-dismiss="modal" class="btn btn-danger"(click)="onDelete">Supprimer utilisateur</button>
+          <button data-dismiss="modal" class="btn btn-danger" (click)="onDelete()" >Supprimer utilisateur</button>
         </div>
        
       </div>
