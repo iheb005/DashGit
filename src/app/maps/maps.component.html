@@ -5,12 +5,188 @@
     <div class="col-md-12">
       <div class="card ">
         <div class="card-header ">
-          Google Maps
+          <h3 class="title">Gestion des structures</h3>
         </div>
         <div class="card-body ">
-          <div id="map" class="map"></div>
+          <div class="row">
+            <button class="btn btn-sm btn-outline-primary" (click)="open(content)">
+              <i class="fa fa-warehouse-alt">Ajouter une nouvelle structure</i>
+          </button>
+
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>ID Structure</th>
+                  <th>Nom</th>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users">
+                  <td><span>{{user.id}}</span></td>
+                  <td><span>{{user.firstname}}</span></td>
+                  <td><span>{{user.lastname}}</span></td>
+                  <td><span>{{user.email}}</span></td>
+                  <td><span>{{user.active}}</span></td>
+              <td>
+
+                  <button class="btn btn-sm btn-info" (click)="openDetails(contentDetails, user)" >
+                    <i class="fa fa-search">Détails</i>
+                    </button>
+
+                  <button class="btn btn-sm btn-warning" (click)="openEdit(contentEdit, user)">
+                  <i class="fa fa-edit">Modifier</i>
+               </button> 
+               <button class="btn btn-sm btn-danger" (click)="openDelete(contentDelete, user)">
+                  <i class="fa fa-remove">supprimer</i>
+               </button>
+              
+              </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- add new user -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Nouvel utilisateur</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+      
+      <div class="form-group">
+        <label for="lastname">Nom</label>
+        <div class="input-group">
+          <input id="lastname" name="lastname" class="form-control" ngModel >
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <div class="input-group">
+          <input id="email" name="email" class="form-control" ngModel >
+        </div>
+      </div>
+      
+      <div class="border text-center">
+        <button data-dismiss="modal" class="btn btn-info">Submit</button>
+        </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
+  </div>
+</ng-template>
+
+<!-- Details user-->
+
+<ng-template #contentDetails let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Détails utilisateur</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    
+    <form>
+      
+      <div class="form-group">
+        <label for="lastname">Nom</label>
+        <div class="input-group">
+          <input id="lname" class="form-control" readonly>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Email</label>
+        <div class="input-group">
+          <input id="email2" class="form-control" readonly >
+        </div>
+      </div>
+      
+      <!--
+      <div class="form-group">
+        <label> Statut</label>
+        <div class="input-group">
+          <input id="status" class="form-control" readonly>
+        </div>
+      </div>
+      -->
+    </form>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
+  </div>
+</ng-template>
+
+
+    <!-- edit user data -->
+    <ng-template #contentEdit let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Modifier utilisateur</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editForm" novalidate >
+          <div class="form-group"> 
+           <label>Id utilisateur</label> 
+           <div class="input-group"> 
+              <input formControlName="id" class="form-control" > 
+           </div> 
+         </div>
+         
+          <div class="form-group">
+            <label for="lastname">Nom</label>
+            <div class="input-group">
+              <input formControlName="lastname" class="form-control" >
+            </div>
+          </div>
+         
+          <div class="form-group">
+            <label for="email">Email</label>
+            <div class="input-group">
+              <input formControlName="email" class="form-control" >
+            </div>
+          </div>
+         
+          <div class="border text-center"> <button data-dismiss="modal" class="btn btn-info" (click)="onSave()">sauvegarder</button> </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
+      </div>
+    </ng-template>
+
+    <!-- Delete user -->
+
+    <ng-template #contentDelete let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title">Confirmer Suppression</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h3>voulez-vous supprimer cet utilisateur ?</h3>
+        <div class="border-text-center">
+          <button data-dismiss="modal" class="btn btn-danger" (click)="onDelete()" >Supprimer utilisateur</button>
+        </div>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
+      </div>
+    </ng-template>
+            

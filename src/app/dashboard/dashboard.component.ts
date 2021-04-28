@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit {
     }
   ]
   */
-  config: SwiperOptions = {
+ /* config: SwiperOptions = {
     pagination:{
       el: '.swiper-pagination',
       clickable: true
@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit {
     },
     spaceBetween: 30
   };
-
+*/
   public lineBigDashboardChartType;
   public gradientStroke;
   public chartColor;
