@@ -19,29 +19,29 @@
                   <th>ID Structure</th>
                   <th>Nom</th>
                   <th>Email</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let user of users">
-                  <td><span>{{user.id}}</span></td>
-                  <td><span>{{user.firstname}}</span></td>
-                  <td><span>{{user.lastname}}</span></td>
-                  <td><span>{{user.email}}</span></td>
-                  <td><span>{{user.active}}</span></td>
-              <td>
+                <tr *ngFor ="let struct of structure">
+                  <td><span>{{struct.id_struct}}</span></td>
+                  <td><span>{{struct.nom}}</span></td>
+                  <td><span>{{struct.mail}}</span></td>
+                  <td>
 
-                  <button class="btn btn-sm btn-info" (click)="openDetails(contentDetails, user)" >
-                    <i class="fa fa-search">Détails</i>
+                    <button class="btn btn-sm btn-info" (click)="openDetails(contentDetails, user)" >
+                      <i class="fa fa-search">Détails</i>
+                      </button>
+
+                    <button class="btn btn-sm btn-warning" (click)="openEdit(contentEdit, user)">
+                    <i class="fa fa-edit">Modifier</i>
+                    </button> 
+                    <button class="btn btn-sm btn-danger" (click)="openDelete(contentDelete, user)">
+                    <i class="fa fa-remove">supprimer</i>
                     </button>
-
-                  <button class="btn btn-sm btn-warning" (click)="openEdit(contentEdit, user)">
-                  <i class="fa fa-edit">Modifier</i>
-               </button> 
-               <button class="btn btn-sm btn-danger" (click)="openDelete(contentDelete, user)">
-                  <i class="fa fa-remove">supprimer</i>
-               </button>
-              
-              </td>
+                    
+                  </td>
+                  
                 </tr>
               </tbody>
             </table>
@@ -55,7 +55,7 @@
 <!-- add new user -->
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Nouvel utilisateur</h4>
+    <h4 class="modal-title" id="modal-basic-title">Nouvelle structure</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -64,15 +64,15 @@
     <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
       
       <div class="form-group">
-        <label for="lastname">Nom</label>
+        <label for="nom">Nom</label>
         <div class="input-group">
-          <input id="lastname" name="lastname" class="form-control" ngModel >
+          <input id="nom" name="nom" class="form-control" ngModel >
         </div>
       </div>
       <div class="form-group">
-        <label for="email">Email</label>
+        <label for="mail">Mail</label>
         <div class="input-group">
-          <input id="email" name="email" class="form-control" ngModel >
+          <input id="mail" name="mail" class="form-control" ngModel >
         </div>
       </div>
       
@@ -90,39 +90,26 @@
 
 <ng-template #contentDetails let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Détails utilisateur</h4>
+    <h4 class="modal-title" id="modal-basic-title">Détails Structure</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    
-    <form>
-      
+    <form>      
       <div class="form-group">
-        <label for="lastname">Nom</label>
+        <label for="nom">Nom</label>
         <div class="input-group">
-          <input id="lname" class="form-control" readonly>
+          <input id="nom" class="form-control" readonly>
         </div>
-      </div>
-      
+      </div>      
       <div class="form-group">
         <label>Email</label>
         <div class="input-group">
-          <input id="email2" class="form-control" readonly >
+          <input id="mail" class="form-control" readonly >
         </div>
       </div>
-      
-      <!--
-      <div class="form-group">
-        <label> Statut</label>
-        <div class="input-group">
-          <input id="status" class="form-control" readonly>
-        </div>
-      </div>
-      -->
     </form>
-
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
