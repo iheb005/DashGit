@@ -29,14 +29,14 @@
                   <td><span>{{struct.mail}}</span></td>
                   <td>
 
-                    <button class="btn btn-sm btn-info" (click)="openDetails(contentDetails, user)" >
+                    <button class="btn btn-sm btn-info" (click)="openDetails(contentDetails, struct)" >
                       <i class="fa fa-search">Détails</i>
                       </button>
 
-                    <button class="btn btn-sm btn-warning" (click)="openEdit(contentEdit, user)">
+                    <button class="btn btn-sm btn-warning" (click)="openEdit(contentEdit, struct)">
                     <i class="fa fa-edit">Modifier</i>
                     </button> 
-                    <button class="btn btn-sm btn-danger" (click)="openDelete(contentDelete, user)">
+                    <button class="btn btn-sm btn-danger" (click)="openDelete(contentDelete, struct)">
                     <i class="fa fa-remove">supprimer</i>
                     </button>
                     
@@ -100,13 +100,13 @@
       <div class="form-group">
         <label for="nom">Nom</label>
         <div class="input-group">
-          <input id="nom" class="form-control" readonly>
+          <input id="name" class="form-control" readonly>
         </div>
       </div>      
       <div class="form-group">
         <label>Email</label>
         <div class="input-group">
-          <input id="mail" class="form-control" readonly >
+          <input id="mail1" class="form-control" readonly >
         </div>
       </div>
     </form>
@@ -120,31 +120,31 @@
     <!-- edit user data -->
     <ng-template #contentEdit let-modal>
       <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Modifier utilisateur</h4>
+        <h4 class="modal-title" id="modal-basic-title">Modifier Structure</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="editForm" novalidate >
+        <form [formGroup]="editForm"  >
           <div class="form-group"> 
-           <label>Id utilisateur</label> 
+           <label>Id Structure</label> 
            <div class="input-group"> 
-              <input formControlName="id" class="form-control" > 
+              <input formControlName="id_struct" class="form-control" > 
            </div> 
          </div>
          
           <div class="form-group">
-            <label for="lastname">Nom</label>
+            <label for="nom">Nom</label>
             <div class="input-group">
-              <input formControlName="lastname" class="form-control" >
+              <input formControlName="nom" class="form-control" >
             </div>
           </div>
          
           <div class="form-group">
-            <label for="email">Email</label>
+            <label for="mail">Email</label>
             <div class="input-group">
-              <input formControlName="email" class="form-control" >
+              <input formControlName="mail" class="form-control" >
             </div>
           </div>
          
