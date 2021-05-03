@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, ReactiveFormsModule } from '@angular/forms';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
@@ -30,10 +30,13 @@ editForm: FormGroup;
 
   constructor(private httpclient: HttpClient,
     private modalService: NgbModal,
-    private fb:FormBuilder) { }
+    private fb:FormBuilder,
+   // private changeDetectorRefs:ChangeDetectorRef
+     ) { }
  
   ngOnInit() {
     this.getUsers();
+   // this.refresh();
     this.editForm = this.fb.group({
       id: [''],
       firstname: [''],
@@ -44,6 +47,11 @@ editForm: FormGroup;
     });
   
   }
+/*
+  refresh(){
+this.changeDetectorRefs.detectChanges();
+  }
+*/
 
   getUsers(){
     this.httpclient.get<any>('http://localhost:8001/getusers').subscribe(response =>{

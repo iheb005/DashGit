@@ -61,18 +61,19 @@
     </button>
   </div>
   <div class="modal-body">
-    <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+    <form [formgroup]="myForm" #f="ngForm" (ngSubmit)="onSubmit(f)"  novalidate>
       
       <div class="form-group">
         <label for="nom">Nom</label>
         <div class="input-group">
-          <input id="nom" name="nom" class="form-control" ngModel >
+<!--formControlName="nom" formControlName="mail"-->          
+          <input id="nom"  type="text" name="nom"  class="form-control" ngModel >
         </div>
       </div>
       <div class="form-group">
         <label for="mail">Mail</label>
         <div class="input-group">
-          <input id="mail" name="mail" class="form-control" ngModel >
+          <input id="mail" type="text" name="mail"  class="form-control" ngModel >
         </div>
       </div>
       
@@ -156,7 +157,7 @@
       </div>
     </ng-template>
 
-    <!-- Delete user -->
+    <!-- Delete structure -->
 
     <ng-template #contentDelete let-modal>
       <div class="modal-header">
@@ -166,9 +167,9 @@
         </button>
       </div>
       <div class="modal-body">
-        <h3>voulez-vous supprimer cet utilisateur ?</h3>
+        <h3>voulez-vous supprimer cette structure ?</h3>
         <div class="border-text-center">
-          <button data-dismiss="modal" class="btn btn-danger" (click)="onDelete()" >Supprimer utilisateur</button>
+          <button data-dismiss="modal" class="btn btn-danger" (click)="onDelete()" >Supprimer structure</button>
         </div>
        
       </div>

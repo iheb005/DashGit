@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import { NgForm, FormGroup, FormBuilder } from '@angular/forms';
+import { NgForm, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
 
 
@@ -23,20 +23,36 @@ export class MapsComponent implements OnInit {
 
     structure : Structure[];
     closeResult: string;
-    editForm: FormGroup;
+    editForm : FormGroup;
+    //myForm: FormGroup;
+    private deleteID: number;
+    
 
   constructor( private httpclient:HttpClient,
     private modalService: NgbModal,
-    private formb: FormBuilder) { }
+    private formb: FormBuilder,
+    private changeDetectorRefs:ChangeDetectorRef) { }
 
   ngOnInit() {
     this.getStructures();
+    this.refresh();
+   /* this.myForm = new FormGroup({
+        "nom": new FormControl(null),
+        "mail":new FormControl(null, Validators.email)
+    })*/
+
+    //ngControl error
     this.editForm = this.formb.group({
         id_struct :[''],
         nom : [''],
         mail : ['']
     });
   }
+
+  refresh(){
+    this.changeDetectorRefs.detectChanges();
+      }
+
 
   getStructures(){
     this.httpclient.get<any>('http://localhost:8001/structures').subscribe(response =>{
@@ -66,7 +82,8 @@ if(reason === ModalDismissReasons.ESC) {
     onSubmit(f:NgForm){
         const url = 'http://localhost:8001/addstruct';
         this.httpclient.post(url,f.value).subscribe((result) =>{
-            this.ngOnInit(); //refresh table
+           // this.ngOnInit(); //refresh table
+            this.refresh();
         });
         this.modalService.dismissAll(); //dismiss modal
     }
@@ -94,5 +111,32 @@ this.editForm.patchValue({
 });
 }
 
+onSave(){
+    const editURL='http://localhost:8001/updstructure/' +this.editForm.value.id_struct;
+    console.log(this.editForm.value);
+    this.httpclient.put(editURL, this.editForm.value).subscribe((results)=>{
+       // this.ngOnInit();
+        this.refresh();
+        this.modalService.dismissAll();
+    })
+}
+
+openDelete(targetModal, structure:Structure){
+    this.deleteID =structure.id_struct;
+    this.modalService.open(targetModal, {
+        centered:true,
+        backdrop: 'static',
+        size: 'lg'
+    });
+}
+
+onDelete(){
+    const deleteURL = 'http://localhost:8001/delstruct/' + this.deleteID;
+    this.httpclient.delete(deleteURL).subscribe((results) => {
+       // this.ngOnInit();
+        this.refresh();
+        this.modalService.dismissAll();
+    });
+}
 
 }
