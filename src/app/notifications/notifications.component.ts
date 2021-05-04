@@ -1,6 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
+export class Facture{
+  constructor(
+    public id_fact: number,
+    public datefacture: Date,
+    public adresse: string,
+    public prix: number
+  ){}
+}
+
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.component.html',
@@ -8,6 +17,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class NotificationsComponent implements OnInit {
 
+  facture : Facture[];
   constructor(private toastr: ToastrService) {}
   showNotification(from, align){
 
