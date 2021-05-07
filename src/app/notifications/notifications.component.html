@@ -8,32 +8,219 @@
           <h3 class="title">Gestion des factures</h3>
         </div>
         <div class="card-body">
-         <div class="row">
-          <button class="btn btn-sm btn-outline-primary" (click)="open(content)">
-            <i class="fa fa-file">Ajouter une nouvelle facture</i>
-        </button>
+          <div class="row">
+            <button class="btn btn-sm btn-outline-primary" (click)="open(content)">
+              <i class="fa fa-file">Ajouter une nouvelle facture</i>
+            </button>
 
-        <table class="table table-bordered table-striped">
-<thead>
-  <tr>
-    <th>Numéro facture</th>
-    <th>Date facture</th>
-    <th>Adresse</th>
-    <th>Prix</th>
-    <th>Actions</th>
-  </tr>
-</thead>
-<tbody>
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Numéro facture</th>
+                  <th>Date facture</th>
+                  <th>Adresse</th>
+                  <th>Prix</th>
+                  <th>N° Bon Commande</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
 
-<tr *ngFor= "let fact of facture"></tr>
+                <tr *ngFor="let fact of facture">
+                  <td><span>{{fact.id_fact}}</span></td>
+                  <td><span>{{fact.datefacture}}</span></td>
+                  <td><span>{{fact.adresse}}</span></td>
+                  <td><span>{{fact.prix}}</span></td>
+                  <td><span>{{fact.numBC}}</span></td>
+                  <td>
+                    <button class="btn btn-sm btn-info" (click)="openDetails(contentDetails, fact)">
+                      <i class="fa fa-search">Détails</i>
+                    </button>
 
-</tbody>
-        </table>
-         </div>
+                    <button class="btn btn-sm btn-warning" (click)="openEdit(contentEdit, fact)">
+                      <i class="fa fa-edit">Modifier</i>
+                    </button>
+                    <button class="btn btn-sm btn-danger" (click)="openDelete(contentDelete, fact)">
+                      <i class="fa fa-remove">supprimer</i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
-   
-    
   </div>
 </div>
+
+<!-- add new bill -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Nouvelle facture</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formgroup]="myForm" #f="ngForm" (ngSubmit)="onSubmit(f)"  novalidate>
+      
+      <div class="form-group">
+        <label for="nom">Date facture</label>
+        <div class="input-group">
+<!--formControlName="nom" formControlName="mail"-->          
+          <input id="datef"  type="date" name="datefacture" class="form-control" ngModel >
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="adresse">Adresse</label>
+        <div class="input-group">
+          <input id="adresse" type="text" name="adresse"  class="form-control" required [(ngModel)]="facture.adresse" #adresse="ngModel" >
+<div *ngIf="adresse.invalid && (adresse.dirty || adresse.touched)" class="alert alert-danger" >
+  <div *ngIf="adresse.errors.required">adresse est un champ necessaire.</div>
+</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="prix">Prix</label>
+        <div class="input-group">
+          <input id="prix" type="number" step="0.01" name="prix" class="form-control" ngModel >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="numBC">N° Bon de Commande</label>
+        <div class="input-group">
+          <input id="numBC" type="text" name="numBC"  class="form-control" ngModel >
+        </div>
+      </div>
+
+      <div class="border text-center">
+        <button data-dismiss="modal" class="btn btn-info">Valider</button>
+        </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
+  </div>
+</ng-template>
+
+
+<!-- Details facture-->
+
+<ng-template #contentDetails let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Détails Facture</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>      
+      <div class="form-group">
+        <label for="datef">Date facture</label>
+        <div class="input-group">
+          <input id="datef"  class="form-control" readonly>
+        </div>
+      </div>      
+      <div class="form-group">
+        <label>Adresse</label>
+        <div class="input-group">
+          <input id="adr" class="form-control" readonly >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Prix</label>
+        <div class="input-group">
+          <input id="price" class="form-control" readonly >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>N° Bon de commande</label>
+        <div class="input-group">
+          <input id="nbc" class="form-control" readonly >
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
+  </div>
+</ng-template>
+
+
+    <!-- edit bill data -->
+    <ng-template #contentEdit let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Modifier Facture</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editForm" novalidate >
+          <div class="form-group"> 
+           <label for="id_fact">Numero Facture</label> 
+           <div class="input-group"> 
+              <input formControlName="id_fact" class="form-control" > 
+           </div> 
+         </div>      
+          <div class="form-group">
+            <label for="datefacture">Date facture</label>
+            <div class="input-group">
+              <input formControlName="datefacture" class="form-control" > 
+            </div>
+          </div>
+         <!--formcontrolname error !!!!-->
+          <div class="form-group">
+            <label for="adresse">Adresse</label>
+            <div class="input-group">
+              <input formControlName="adresse" class="form-control" >
+            </div>
+          </div>
+         
+          <div class="form-group">
+            <label for="prix">Prix</label>
+            <div class="input-group">
+              <input formControlName="prix" class="form-control" >
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="numBC">N° Bon de commande</label>
+            <div class="input-group">
+              <input formControlName="numBC" class="form-control" >
+            </div>
+          </div>
+          <div class="border text-center"> <button data-dismiss="modal" class="btn btn-info" (click)="onSave()">sauvegarder</button> </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
+      </div>
+    </ng-template>
+
+<!-- Delete bill -->
+
+<ng-template #contentDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Confirmer Suppression</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h3>voulez-vous supprimer cette facture ?</h3>
+    <div class="border-text-center">
+      <button data-dismiss="modal" class="btn btn-danger" (click)="onDelete()" >Supprimer facture</button>
+    </div>
+   
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
+  </div>
+</ng-template>

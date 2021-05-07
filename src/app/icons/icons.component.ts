@@ -98,7 +98,7 @@ this.changeDetectorRefs.detectChanges();
     document.getElementById('fname').setAttribute('value', user.firstname);
     document.getElementById('lname').setAttribute('value', user.lastname);
     document.getElementById('email2').setAttribute('value', user.email);
-   // document.getElementById('status').setAttribute('value', user.active);
+    document.getElementById('status').setAttribute('value', user.active.toString());
  }
 
 

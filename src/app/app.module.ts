@@ -26,7 +26,8 @@ import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
     AppRoutingModule,
     NgbModule,
     ToastrModule.forRoot(),
-    NgxUsefulSwiperModule
+    NgxUsefulSwiperModule,
+    
   ],
   declarations: [
     AppComponent,
