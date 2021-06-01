@@ -1,0 +1,40 @@
+{
+  "fournisseurs": [
+    {
+      "ABAN8": 400008,
+      "ABTAX": "00149282G3",
+      "ABALPH": "ABB TECHNOLOGIES S.A",
+      "ABDC": "ABBTECHNOLOGIESSA"
+    },
+    {
+      "ABAN8": 400020,
+      "ABTAX": "01087972G3",
+      "ABALPH": "AFRICAINE DE L AUTOMOBILE",
+      "ABDC": "AFRICAINEDELAUTOMOBILE"
+    },
+    {
+      "ABAN8": 400022,
+      "ABTAX": "49592372C2",
+      "ABALPH": "Africa Sprint sarl",
+      "ABDC": "AFRICASPRINTSARL"
+    },
+    {
+      "ABAN8": 400024,
+      "ABTAX": "23273792R2",
+      "ABALPH": "ALUMINIUM INTERNATIONAL SERVICES",
+      "ABDC": "ALUMINIUMINTERNATIONALSERVICES"
+    },
+    {
+      "ABAN8": 400032,
+      "ABTAX": "00834102C3",
+      "ABALPH": "AFRIQUE MINES ET INDUSTRIES",
+      "ABDC": "AFRIQUEMINESETINDUSTRIES"
+    },
+    {
+      "ABAN8": 400038,
+      "ABTAX": "21252362G0",
+      "ABALPH": "AGENCE DE REGULATION DES TELECOM",
+      "ABDC": "AGENCEDEREGULATIONDESTELECOM"
+    }
+  ]
+}

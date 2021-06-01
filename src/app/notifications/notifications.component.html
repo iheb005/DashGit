@@ -21,30 +21,47 @@
                   <th>Adresse</th>
                   <th>Prix</th>
                   <th>N° Bon Commande</th>
+                  <th>Num Fournisseur</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-
-                <tr *ngFor="let fact of facture">
-                  <td><span>{{fact.id_fact}}</span></td>
-                  <td><span>{{fact.datefacture}}</span></td>
-                  <td><span>{{fact.adresse}}</span></td>
-                  <td><span>{{fact.prix}}</span></td>
-                  <td><span>{{fact.numBC}}</span></td>
-                  <td>
-                    <button class="btn btn-sm btn-info" (click)="openDetails(contentDetails, fact)">
-                      <i class="fa fa-search">Détails</i>
-                    </button>
-
-                    <button class="btn btn-sm btn-warning" (click)="openEdit(contentEdit, fact)">
-                      <i class="fa fa-edit">Modifier</i>
-                    </button>
-                    <button class="btn btn-sm btn-danger" (click)="openDelete(contentDelete, fact)">
-                      <i class="fa fa-remove">supprimer</i>
-                    </button>
-                  </td>
+              <!--  <span *ngIf="facture"> -->
+                  <tr *ngFor="let fact of facture">
+                    <td><span>{{fact.id_fact}}</span></td>
+                    <td><span>{{fact.datefacture}}</span></td>
+                    <td><span>{{fact.adresse}}</span></td>
+                    <td><span>{{fact.prix}}</span></td>
+                    <td><span>{{fact.numBC}}</span></td>
+                    <td>
+                      <button class="btn btn-sm btn-info" (click)="openDetails(contentDetails, fact)">
+                        <i class="fa fa-search">Détails</i>
+                      </button>
+                      <button class="btn btn-sm btn-warning" (click)="openEdit(contentEdit, fact)">
+                        <i class="fa fa-edit">Modifier</i>
+                      </button>
+                      <button class="btn btn-sm btn-danger" (click)="openDelete(contentDelete, fact)">
+                        <i class="fa fa-remove">supprimer</i>
+                      </button>
+                    </td>
+                  </tr>
+               <!-- </span> -->
+               <!-- <span *ngIf="fournisseur"> -->
+                  <tr *ngFor="let frs of fournisseur">
+                    <td><span> {{frs.ABAN8}} </span></td>
+                    <td><span> {{frs.ABTAX}} </span></td>
+                    <td><span> {{frs.ABALPH}} </span></td>
+                    <td><span> {{frs.ABDC}} </span></td>
+                  </tr>
+               <!-- </span> -->
+                <!-- </span> -->
+                <span *ngIf="cmdefrs"> 
+                <tr *ngFor="let cmdefrs of cmdefrs">
+                  <td><span> {{cmdefrs.PHDOCO}} </span></td>
+                  <td><span> {{cmdefrs.PHAN8}} </span></td>
+                  <td><span> {{cmdefrs.PHOTOT}} </span></td>
                 </tr>
+             </span> 
               </tbody>
             </table>
           </div>
@@ -63,42 +80,50 @@
     </button>
   </div>
   <div class="modal-body">
-    <form [formgroup]="myForm" #f="ngForm" (ngSubmit)="onSubmit(f)"  novalidate>
-      
+    <form [formgroup]="myForm" #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+
       <div class="form-group">
         <label for="nom">Date facture</label>
         <div class="input-group">
-<!--formControlName="nom" formControlName="mail"-->          
-          <input id="datef"  type="date" name="datefacture" class="form-control" ngModel >
+          <!--formControlName="nom" formControlName="mail"-->
+          <input id="datef" type="date" name="datefacture" class="form-control" ngModel>
         </div>
       </div>
       <div class="form-group">
         <label for="adresse">Adresse</label>
         <div class="input-group">
-          <input id="adresse" type="text" name="adresse"  class="form-control" required [(ngModel)]="facture.adresse" #adresse="ngModel" >
-<div *ngIf="adresse.invalid && (adresse.dirty || adresse.touched)" class="alert alert-danger" >
-  <div *ngIf="adresse.errors.required">adresse est un champ necessaire.</div>
-</div>
+          <input id="adresse" type="text" name="adresse" class="form-control" required [(ngModel)]="facture.adresse"
+            #adresse="ngModel">
+          <div *ngIf="adresse.invalid && (adresse.dirty || adresse.touched)" class="alert alert-danger">
+            <div *ngIf="adresse.errors.required">adresse est un champ necessaire.</div>
+          </div>
         </div>
       </div>
 
       <div class="form-group">
         <label for="prix">Prix</label>
         <div class="input-group">
-          <input id="prix" type="number" step="0.01" name="prix" class="form-control" ngModel >
+          <input id="prix" type="number" step="0.01" name="prix" class="form-control" ngModel>
         </div>
       </div>
 
       <div class="form-group">
         <label for="numBC">N° Bon de Commande</label>
         <div class="input-group">
-          <input id="numBC" type="text" name="numBC"  class="form-control" ngModel >
+          <input id="numBC" type="text" name="numBC" class="form-control" ngModel>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="numBC">Numero fournisseur</label>
+        <div class="input-group">
+          <input id="ABAN8" type="number" name="ABAN8" class="form-control" ngModel>
         </div>
       </div>
 
       <div class="border text-center">
         <button data-dismiss="modal" class="btn btn-info">Valider</button>
-        </div>
+      </div>
     </form>
   </div>
   <div class="modal-footer">
@@ -117,31 +142,31 @@
     </button>
   </div>
   <div class="modal-body">
-    <form>      
+    <form>
       <div class="form-group">
         <label for="datef">Date facture</label>
         <div class="input-group">
-          <input id="datef"  class="form-control" readonly>
+          <input id="datef" class="form-control" readonly>
         </div>
-      </div>      
+      </div>
       <div class="form-group">
         <label>Adresse</label>
         <div class="input-group">
-          <input id="adr" class="form-control" readonly >
+          <input id="adr" class="form-control" readonly>
         </div>
       </div>
 
       <div class="form-group">
         <label>Prix</label>
         <div class="input-group">
-          <input id="price" class="form-control" readonly >
+          <input id="price" class="form-control" readonly>
         </div>
       </div>
 
       <div class="form-group">
         <label>N° Bon de commande</label>
         <div class="input-group">
-          <input id="nbc" class="form-control" readonly >
+          <input id="nbc" class="form-control" readonly>
         </div>
       </div>
 
@@ -153,56 +178,57 @@
 </ng-template>
 
 
-    <!-- edit bill data -->
-    <ng-template #contentEdit let-modal>
-      <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Modifier Facture</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
+<!-- edit bill data -->
+<ng-template #contentEdit let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Modifier Facture</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="editForm" novalidate>
+      <div class="form-group">
+        <label for="id_fact">Numero Facture</label>
+        <div class="input-group">
+          <input formControlName="id_fact" class="form-control">
+        </div>
       </div>
-      <div class="modal-body">
-        <form [formGroup]="editForm" novalidate >
-          <div class="form-group"> 
-           <label for="id_fact">Numero Facture</label> 
-           <div class="input-group"> 
-              <input formControlName="id_fact" class="form-control" > 
-           </div> 
-         </div>      
-          <div class="form-group">
-            <label for="datefacture">Date facture</label>
-            <div class="input-group">
-              <input formControlName="datefacture" class="form-control" > 
-            </div>
-          </div>
-         <!--formcontrolname error !!!!-->
-          <div class="form-group">
-            <label for="adresse">Adresse</label>
-            <div class="input-group">
-              <input formControlName="adresse" class="form-control" >
-            </div>
-          </div>
-         
-          <div class="form-group">
-            <label for="prix">Prix</label>
-            <div class="input-group">
-              <input formControlName="prix" class="form-control" >
-            </div>
-          </div>
+      <div class="form-group">
+        <label for="datefacture">Date facture</label>
+        <div class="input-group">
+          <input formControlName="datefacture" class="form-control">
+        </div>
+      </div>
+      <!--formcontrolname error !!!!-->
+      <div class="form-group">
+        <label for="adresse">Adresse</label>
+        <div class="input-group">
+          <input formControlName="adresse" class="form-control">
+        </div>
+      </div>
 
-          <div class="form-group">
-            <label for="numBC">N° Bon de commande</label>
-            <div class="input-group">
-              <input formControlName="numBC" class="form-control" >
-            </div>
-          </div>
-          <div class="border text-center"> <button data-dismiss="modal" class="btn btn-info" (click)="onSave()">sauvegarder</button> </div>
-        </form>
+      <div class="form-group">
+        <label for="prix">Prix</label>
+        <div class="input-group">
+          <input formControlName="prix" class="form-control">
+        </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
+
+      <div class="form-group">
+        <label for="numBC">N° Bon de commande</label>
+        <div class="input-group">
+          <input formControlName="numBC" class="form-control">
+        </div>
       </div>
-    </ng-template>
+      <div class="border text-center"> <button data-dismiss="modal" class="btn btn-info"
+          (click)="onSave()">sauvegarder</button> </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
+  </div>
+</ng-template>
 
 <!-- Delete bill -->
 
@@ -216,9 +242,9 @@
   <div class="modal-body">
     <h3>voulez-vous supprimer cette facture ?</h3>
     <div class="border-text-center">
-      <button data-dismiss="modal" class="btn btn-danger" (click)="onDelete()" >Supprimer facture</button>
+      <button data-dismiss="modal" class="btn btn-danger" (click)="onDelete()">Supprimer facture</button>
     </div>
-   
+
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>

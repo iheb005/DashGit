@@ -1,10 +1,12 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import{FormControl}from '@angular/forms';
 import { Validators } from '@angular/forms';
+import {Observable, forkJoin} from 'rxjs';
+
 
 export class Facture {
   constructor(
@@ -14,6 +16,21 @@ export class Facture {
     public prix: number,
     public numBC: string
   ) { }
+};
+export class Fournisseur{
+constructor(
+  public ABAN8: number,
+  public ABTAX: string,
+  public ABALPH: string,
+  public ABDC: string 
+){}
+}
+export class Cmdefrs{
+  constructor(
+    public PHDOCO: number,
+    public PHAN8: number,
+    public PHOTOT: number
+  ){}
 }
 
 @Component({
@@ -22,25 +39,46 @@ export class Facture {
   styleUrls: ['./notifications.component.css']
 
 })
+@Injectable()
 export class NotificationsComponent implements OnInit {
   [x: string]: any;
 
+  nvliste:any[];
+  resData: any;
   facture: Facture[];
+  fournisseur: Fournisseur[];
+  cmdefrs: Cmdefrs[];
+ // fournisseur: any[];
   closeResult: string;
   editForm: FormGroup;
   private deleteID: number;
   //public currencyInput = document.querySelector('input[type="currency"]');
   // public currency = 'XOF'; // https://www.currency-iso.org/dam/downloads/lists/list_one.xml
 
-
-
   constructor(private httpclient: HttpClient,
     private modalService: NgbModal,
-    private formb: FormBuilder) { }
+    private formb: FormBuilder) {
+     /* this.getJSON().subscribe(data => {
+        console.log(data);
+    });
+    */
+     }
 
-
+ /*   public getJSON(): Observable<any> {
+      return this.http.get("./fournisseurs.json");
+  }
+  */
   ngOnInit() {
-    this.getfactures();
+    const reqHeader = new HttpHeaders({ 'Content-Type': 'application/json', 'No-Auth': 'True' });
+    // const bill= this.getfactures();
+    // const frs= this.getfournisseurs();
+   this.getData();
+   
+    //this.getfactures();
+  //this.getfournisseurs();
+
+//this.forkJoin();
+
     this.editForm = this.formb.group({
       id_fact: [''],
       datefacture: [''],
@@ -48,21 +86,66 @@ export class NotificationsComponent implements OnInit {
       prix: [''],
       numBC: ['']
     });
+ 
+    // forkJoin([bill,frs]).subscribe(res => {
 
-    /*   
-    // format inital value
-   this.onBlur({target:this.currencyInput})
-   
-       // bind event listeners
-       this.currencyInput.addEventListener('focus', this.onFocus)
-       this.currencyInput.addEventListener('blur', this.onBlur)
-   */
+    // console.log();
+    // this.bill=res[0];
+    // this.frs=res[1];
+
+    // })
+     
+  /*  this.httpClient.get("fournisseurs.json").subscribe(data =>{
+      console.log(data);
+      this.fournisseur = data;
+    })
+    */
+
   }
 
+  
   getfactures() {
+    // this.httpclient.get<any>('http://localhost:8001/factures').subscribe(response => {
+    //   console.log(response);
+    //   this.facture = response;
+    // })
     this.httpclient.get<any>('http://localhost:8001/factures').subscribe(response => {
       console.log(response);
       this.facture = response;
+    })
+  }
+
+  getData() {
+    forkJoin([
+      this.httpclient.get<any>('http://localhost:8001/factures'),
+      this.httpclient.get<any>('http://localhost:3000/fournisseurs'), //observable 2
+      this.httpclient.get<any>('http://localhost:4000/cmdefrs'),
+    ]).subscribe(([response1, response2,response3]) => {
+      
+      this.resData = [response1, response2,response3];
+      this.facture = response1;
+      this.fournisseur= response2;
+      this.cmdefrs= response3;
+      console.log();
+    }
+    )
+  }
+
+  getcmdefrs(){
+    this.httpclient.get<any>('http://localhost:4000/cmdefrs').subscribe(response => {
+      console.log(response);
+      this.cmdefrs = response;
+    })
+  }
+
+  getfournisseurs() {
+    // this.httpclient.get<any>('http://localhost:8001/fournisseurs').subscribe(response2 => {
+    //   console.log(response2);
+    //   this.fournisseur = response2;
+    // })
+    this.httpclient.get<any>('http://localhost:3000/fournisseurs').subscribe(response2 => {
+      console.log(response2);
+      this.fournisseur = response2;
     })
   }
 
@@ -175,3 +258,7 @@ export class NotificationsComponent implements OnInit {
   */
 
 }
+function testforkJoin() {
+  throw new Error('Function not implemented.');
+}
+
